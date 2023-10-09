@@ -184,7 +184,7 @@ with tab4:
 
     if df is not None:
         
-        df = df_tab4.dropna()
+        df = df.dropna()
 
         st.subheader('Local de onde você mais saiu:')
         endereco_mais_frequente = df['Begin Trip Address'].value_counts().idxmax()
