@@ -200,8 +200,6 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
-    global df
-
     if df is not None:        
         df = df.dropna()
 
