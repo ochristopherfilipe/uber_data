@@ -191,10 +191,10 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
-    df = load_data(file_data)
+    df2 = load_data(file_data)
     
-    if df is not None and not df.empty:        
-        df = df.dropna()
+    if df2 is not None and not df2.empty:        
+        df2 = df.dropna()
 
         st.subheader('Local de onde você mais saiu:')
         endereco_mais_frequente = df['Begin Trip Address'].value_counts().idxmax()
@@ -215,13 +215,13 @@ with tab4:
             return great_circle(begin_coords, dropoff_coords).kilometers
 
         # Aplicar a função para calcular a distância para cada viagem e criar uma nova coluna 'Distância'
-        df['Distance'] = df.apply(calcular_distancia, axis=1)
+        df2['Distance'] = df2.apply(calcular_distancia, axis=1)
 
         # Encontrar a maior distância percorrida
-        maior_distancia = df['Distance'].max()
+        maior_distancia = df2['Distance'].max()
 
         # Encontrar a linha correspondente à viagem mais longa
-        viagem_mais_longa = df[df['Distance'] == maior_distancia]
+        viagem_mais_longa = df2[df2['Distance'] == maior_distancia]
 
         # Obter informações sobre a viagem mais longa
         valor_viagem = viagem_mais_longa['Fare Amount'].values[0]
@@ -245,7 +245,7 @@ with tab4:
 
 
         # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
-        df_coordinates = df[["Begin Trip Lat", "Begin Trip Lng"]]
+        df_coordinates = df2[["Begin Trip Lat", "Begin Trip Lng"]]
         df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
 
         # Criar um mapa com st.map usando as coordenadas
@@ -256,7 +256,7 @@ with tab4:
         st.subheader('Todos os Pontos de Chegada:')
 
         # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
-        df_coordinates = df[["Dropoff Lat", "Dropoff Lng"]]
+        df_coordinates = df2[["Dropoff Lat", "Dropoff Lng"]]
         df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
 
         # Criar um mapa com st.map usando as coordenadas
