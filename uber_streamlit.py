@@ -143,41 +143,33 @@ with tab2:
 with tab3:
     st.title('Dados de Despesas:')
 
-    # Função para carregar os dados definida na tab1
-    def load_data_tab3(file_data):
-        if file_data is not None:
-            df_tab3 = pd.read_csv(file_data)
-            return df_tab3
 
-    # Carregar dados da tab3
-    df_tab3 = load_data_tab3(file_data)
-
-    if df_tab3 is not None:
+    if df is not None:
         # Calculando o valor total gasto
-        valor_gasto = df_tab3['Fare Amount'].sum()
+        valor_gasto = df['Fare Amount'].sum()
         st.subheader(f"Você já gastou R$ {valor_gasto:.2f} com Uber:")
 
         st.markdown('---')
 
         # Calculando o valor médio gasto
-        valor_medio = df_tab3['Fare Amount'].mean()
+        valor_medio = df['Fare Amount'].mean()
         st.subheader(f'O valor médio gasto em todas as viagens foi de R${valor_medio:.2f}')
 
         st.markdown('---')
 
         # Convertendo colunas para o formato datetime especificado
-        df_tab3['Begin Trip Time'] = pd.to_datetime(df_tab3['Begin Trip Time'], format=date_format)
-        df_tab3['Dropoff Time'] = pd.to_datetime(df_tab3['Dropoff Time'], format=date_format)
+        df['Begin Trip Time'] = pd.to_datetime(df['Begin Trip Time'], format=date_format)
+        df['Dropoff Time'] = pd.to_datetime(df['Dropoff Time'], format=date_format)
 
         # Calculando a duração média das viagens em minutos
-        df_tab3['Duration'] = (df_tab3['Dropoff Time'] - df_tab3['Begin Trip Time']).dt.total_seconds() / 60
-        duracao_media = df_tab3['Duration'].mean()
+        df['Duration'] = (df['Dropoff Time'] - df['Begin Trip Time']).dt.total_seconds() / 60
+        duracao_media = df['Duration'].mean()
         st.subheader(f'A duração média de todas as viagens foi de {duracao_media:.0f} minutos')
 
         st.markdown('---')
 
         # Calculando o custo médio por quilômetro
-        distancia = df_tab3['Distance (miles)'].sum() * 1.60934
+        distancia = df['Distance (miles)'].sum() * 1.60934
         media_km_valor = valor_gasto / distancia
         st.subheader(f"Você gastou em média R$ {media_km_valor:.2f} por quilômetro")
 
@@ -190,18 +182,9 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
-    # Função para carregar os dados definida na tab1
-    def load_data_tab1(file_data):
-        if file_data is not None:
-            df_tab1 = pd.read_csv(file_data)
-            return df_tab1
-
-    # Carregar dados da tab1
-    df_tab4 = load_data_tab1(file_data)
-
-    if df_tab4 is not None:
+    if df is not None:
         
-        df_tab4 = df_tab4.dropna()
+        df = df_tab4.dropna()
 
         st.subheader('Local de onde você mais saiu:')
         endereco_mais_frequente = df['Begin Trip Address'].value_counts().idxmax()
@@ -222,13 +205,13 @@ with tab4:
             return great_circle(begin_coords, dropoff_coords).kilometers
 
         # Aplicar a função para calcular a distância para cada viagem e criar uma nova coluna 'Distância'
-        df_tab4['Distance'] = df_tab4.apply(calcular_distancia, axis=1)
+        df['Distance'] = df.apply(calcular_distancia, axis=1)
 
         # Encontrar a maior distância percorrida
-        maior_distancia = df_tab4['Distance'].max()
+        maior_distancia = df['Distance'].max()
 
         # Encontrar a linha correspondente à viagem mais longa
-        viagem_mais_longa = df_tab4[df_tab4['Distance'] == maior_distancia]
+        viagem_mais_longa = df[df_tab4['Distance'] == maior_distancia]
 
         # Obter informações sobre a viagem mais longa
         valor_viagem = viagem_mais_longa['Fare Amount'].values[0]
@@ -250,30 +233,25 @@ with tab4:
 
         st.subheader("Todos os Pontos de Partida:")
 
-        if file_data is not None:
-            df_tab4 = load_data_tab1(file_data)
 
-            df_tab4 = df_tab4.dropna()
+        df = df.dropna()
 
-            # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
-            df_coordinates = df_tab4[["Begin Trip Lat", "Begin Trip Lng"]]
-            df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
+        # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
+        df_coordinates = df[["Begin Trip Lat", "Begin Trip Lng"]]
+        df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
 
-            # Criar um mapa com st.map usando as coordenadas
-            st.map(df_coordinates, use_container_width=True)
+        # Criar um mapa com st.map usando as coordenadas
+        st.map(df_coordinates, use_container_width=True)
 
         st.markdown("---")
 
         st.subheader('Todos os Pontos de Chegada:')
 
-        if file_data is not None:
-            df_tab4 = load_data_tab1(file_data)
+        df = df.dropna()
 
-            df_tab4 = df_tab4.dropna()
+        # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
+        df_coordinates = df[["Dropoff Lat", "Dropoff Lng"]]
+        df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
 
-            # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
-            df_coordinates = df_tab4[["Dropoff Lat", "Dropoff Lng"]]
-            df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
-
-            # Criar um mapa com st.map usando as coordenadas
-            st.map(df_coordinates, use_container_width=True)
+        # Criar um mapa com st.map usando as coordenadas
+        st.map(df_coordinates, use_container_width=True)
