@@ -4,6 +4,12 @@ import numpy as np
 import streamlit as st
 from geopy.distance import great_circle
 
+# Função para carregar os dados
+def load_data(file_data):
+    if file_data is not None:
+        df = pd.read_csv(file_data)
+        return df
+    return None
 
 # Configuração da página
 st.set_page_config(
@@ -20,14 +26,16 @@ st.write('Para acessar seus dados da Uber, você deve solicitar...pipipipopopo')
 tab1, tab2, tab3, tab4 = st.tabs(["Visualizando os dados", "Gráficos", "Despesas", "Locais"])
 
 with tab1:
-    # Função para carregar os dados
+    # Upload do arquivo CSV na primeira aba
+    file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
 
-    df = pd.DataFrame()
+    df = load_data(file_data)
 
-    def load_data(file_data):
-        if file_data is not None:
-            df = pd.read_csv(file_data)
-            return df
+    if df is not None:
+        # Checkbox para mostrar detalhes do dataset
+        if st.checkbox('Mostrar detalhes do dataset'):
+            st.subheader('Preview dos Dados')
+            st.write(df)
 
     # Upload do arquivo CSV na primeira aba
     file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
