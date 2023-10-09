@@ -211,7 +211,7 @@ with tab4:
         maior_distancia = df['Distance'].max()
 
         # Encontrar a linha correspondente à viagem mais longa
-        viagem_mais_longa = df[df_tab4['Distance'] == maior_distancia]
+        viagem_mais_longa = df[df['Distance'] == maior_distancia]
 
         # Obter informações sobre a viagem mais longa
         valor_viagem = viagem_mais_longa['Fare Amount'].values[0]
