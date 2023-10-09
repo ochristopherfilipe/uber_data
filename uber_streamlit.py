@@ -21,7 +21,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Visualizando os dados", "Gráficos", "Despesa
 
 with tab1:
     # Função para carregar os dados
-    @st.cache_data
+    
     def load_data(file_data):
         if file_data is not None:
             df = pd.read_csv(file_data)
@@ -60,7 +60,6 @@ with tab2:
     st.title('Gráficos')
 
     # Função para carregar os dados definida na tab1
-    @st.cache_data
     def load_data_tab2(file_data):
         if file_data is not None:
             df_tab2 = pd.read_csv(file_data)
@@ -154,7 +153,6 @@ with tab3:
     st.title('Dados de Despesas:')
 
     # Função para carregar os dados definida na tab1
-    @st.cache_data
     def load_data_tab3(file_data):
         if file_data is not None:
             df_tab3 = pd.read_csv(file_data)
@@ -202,7 +200,6 @@ with tab4:
     st.title('Locais:')
 
     # Função para carregar os dados definida na tab1
-    @st.cache_data
     def load_data_tab1(file_data):
         if file_data is not None:
             df_tab1 = pd.read_csv(file_data)
