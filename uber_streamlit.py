@@ -242,23 +242,22 @@ with tab4:
 
         st.markdown('---')
 
-        def plot_map(df_coordinates):
-            st.map(df_coordinates, use_container_width=True)
-
-        st.subheader("Todos os Pontos de Partida:")
+        st.subheader("Mapa Interativo:")  # Adicione um título para o mapa
         
-        df_coordinates_start = df[["Begin Trip Lat", "Begin Trip Lng"]]
-        df_coordinates_start = df_coordinates_start.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
-        plot_map(df_coordinates_start)
+        # Crie um mapa com Plotly Express
+        fig = px.scatter_mapbox(df,
+                                lat="Begin Trip Lat",  # Substitua pelo nome correto da coluna de latitude
+                                lon="Begin Trip Lng",  # Substitua pelo nome correto da coluna de longitude
+                                hover_name="Begin Trip Address",  # Substitua pelo nome correto da coluna de rótulos
+                                zoom=10)
         
-        st.markdown("---")
+        # Defina o layout do mapa
+        fig.update_layout(mapbox_style="open-street-map")
+        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
         
-        st.subheader('Todos os Pontos de Chegada:')
+        # Exiba o mapa no Streamlit
+        st.plotly_chart(fig)
         
-        df_coordinates_dropoff = df[["Dropoff Lat", "Dropoff Lng"]]
-        df_coordinates_dropoff = df_coordinates_dropoff.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
-        plot_map(df_coordinates_dropoff)
-
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
         st.write("Carregue um arquivo CSV na aba 1 para continuar.")
