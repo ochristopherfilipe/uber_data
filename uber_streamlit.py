@@ -192,8 +192,6 @@ with tab3:
 
 with tab4:
     st.title('Locais:')
-
-    df = load_data(file_data)
     
     if df is not None and not df.empty:        
         df = df.dropna()
