@@ -21,7 +21,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["Visualizando os dados", "Gráficos", "Despesa
 
 with tab1:
     # Função para carregar os dados
-    
+
+    df = pd.DataFrame()
+
     def load_data(file_data):
         if file_data is not None:
             df = pd.read_csv(file_data)
@@ -30,7 +32,7 @@ with tab1:
     # Upload do arquivo CSV na primeira aba
     file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
 
-    if file_data is not None:
+    if not df.empty:
         df = load_data(file_data)
 
         # Checkbox para mostrar detalhes do dataset
@@ -59,7 +61,8 @@ with tab1:
 with tab2:
     st.title('Gráficos')
 
-    if df is not None:
+    if not df.empty:
+
         # Criando categorias de gastos
         categories = [0, 5, 10, 15, 20, 30, float('inf')]
         labels = ['R$0 - R$5', 'R$6 - R$10', 'R$11-R$15', 'R$16-R$20', 'R$21-R$30', 'R$31-R$100']
@@ -137,13 +140,17 @@ with tab2:
         # Exibindo o gráfico no Streamlit
         st.plotly_chart(fig)
 
+    else:
+        # Se df não estiver definido, exiba uma mensagem para o usuário
+        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
+
 
 
 with tab3:
     st.title('Dados de Despesas:')
 
 
-    if df is not None:
+    if not df.empty:
         # Calculando o valor total gasto
         valor_gasto = df['Fare Amount'].sum()
         st.subheader(f"Você já gastou R$ {valor_gasto:.2f} com Uber:")
@@ -176,12 +183,16 @@ with tab3:
 
         st.subheader(f"Você já percorreu {distancia:.2f} Km de Uber")
 
+    else:
+        # Se df não estiver definido, exiba uma mensagem para o usuário
+        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
+
 
 
 with tab4:
     st.title('Locais:')
 
-    if df is not None:
+    if not df.empty:
         
         df = df.dropna()
 
@@ -254,3 +265,7 @@ with tab4:
 
         # Criar um mapa com st.map usando as coordenadas
         st.map(df_coordinates, use_container_width=True)
+
+    else:
+        # Se df não estiver definido, exiba uma mensagem para o usuário
+        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
