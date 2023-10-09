@@ -192,8 +192,9 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
-    if not df.empty:
-        
+    global df
+
+    if df is not None:        
         df = df.dropna()
 
         st.subheader('Local de onde você mais saiu:')
