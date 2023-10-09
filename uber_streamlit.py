@@ -4,16 +4,18 @@ import numpy as np
 import streamlit as st
 from geopy.distance import great_circle
 
-# Função para carregar os dados
+# Define o df como None caso não carregue os arquivos
+
 df = None
 
 # Função para carregar os dados
 def load_data(file_data):
-    if file_data is not None and file_data.read() != b'':
+    if file_data is not None:
         df = pd.read_csv(file_data)
         return df
     else:
         return None
+
 
 # Configuração da página
 st.set_page_config(
