@@ -26,7 +26,8 @@ st.set_page_config(
 
 # Título e introdução
 st.title('Análise dos seus dados da Uber')
-st.markdown('1. Acesse o site da Uber e solicite seus dados.
+st.write('
+1. Acesse o site da Uber e solicite seus dados.
   ou acesse [esse link](https://auth.uber.com/v2/?breeze_local_zone=phx7&next_url=https%3A%2F%2Fmyprivacy.uber.com%2Fprivacy%2Fexploreyourdata%2Fdownload&state=mBH_cSQedxK1Fzjp3Lqd6x6G7axt_m4--MebmYL_nx8%3D) para solicitar seus dados
 <br>
 
