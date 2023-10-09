@@ -240,44 +240,26 @@ with tab4:
         st.write(f"- Data e horário de saída: {data_saida}")
         st.write(f"- Data e horário de chegada: {data_chegada}")
 
-
         st.markdown('---')
 
         def plot_map(df_coordinates):
             st.map(df_coordinates, use_container_width=True)
 
         st.subheader("Todos os Pontos de Partida:")
-
-        if file_data is not None:        
-            # Carregar o arquivo para a variável df
-            df = pd.read_csv(file_data)
         
-            df = df.dropna()
-        
-            # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
-            df_coordinates = df[["Begin Trip Lat", "Begin Trip Lng"]]
-            df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
-        
-            # Criar um mapa com a função plot_map()
-            plot_map(df_coordinates)
+        df_coordinates_start = df[["Begin Trip Lat", "Begin Trip Lng"]]
+        df_coordinates_start = df_coordinates_start.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
+        plot_map(df_coordinates_start)
         
         st.markdown("---")
         
         st.subheader('Todos os Pontos de Chegada:')
         
-        if file_data is not None:        
-            # Carregar o arquivo para a variável df
-            df = pd.read_csv(file_data)
-        
-            df = df.dropna()
-        
-            # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
-            df_coordinates = df[["Dropoff Lat", "Dropoff Lng"]]
-            df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
-        
-            # Criar um mapa com a função plot_map()
-            plot_map(df_coordinates)
+        df_coordinates_dropoff = df[["Dropoff Lat", "Dropoff Lng"]]
+        df_coordinates_dropoff = df_coordinates_dropoff.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
+        plot_map(df_coordinates_dropoff)
 
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
         st.write("Carregue um arquivo CSV na aba 1 para continuar.")
+
