@@ -37,17 +37,6 @@ with tab1:
             st.subheader('Preview dos Dados')
             st.write(df)
 
-    # Upload do arquivo CSV na primeira aba
-    file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
-
-    if df is not None:
-        df = load_data(file_data)
-
-        # Checkbox para mostrar detalhes do dataset
-        if st.checkbox('Mostrar detalhes do dataset'):
-            st.subheader('Preview dos Dados')
-            st.write(df)
-
         st.markdown('---')
 
         # Excluindo a coluna 'Fare Currency'
