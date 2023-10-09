@@ -59,84 +59,82 @@ with tab1:
 with tab2:
     st.title('Gráficos')
 
-    # Continuar com a criação de gráficos usando df
-    if df is not None:
-        # Criando categorias de gastos
-        categories = [0, 5, 10, 15, 20, 30, float('inf')]
-        labels = ['R$0 - R$5', 'R$6 - R$10', 'R$11-R$15', 'R$16-R$20', 'R$21-R$30', 'R$31-R$100']
+    # Criando categorias de gastos
+    categories = [0, 5, 10, 15, 20, 30, float('inf')]
+    labels = ['R$0 - R$5', 'R$6 - R$10', 'R$11-R$15', 'R$16-R$20', 'R$21-R$30', 'R$31-R$100']
 
-        # Adicionando uma nova coluna ao DataFrame com as categorias
-        df['Fare Category'] = pd.cut(df['Fare Amount'], bins=categories, labels=labels)
+    # Adicionando uma nova coluna ao DataFrame com as categorias
+    df['Fare Category'] = pd.cut(df['Fare Amount'], bins=categories, labels=labels)
 
-        # Contando quantos valores estão em cada categoria
-        count_by_category = df['Fare Category'].value_counts().reset_index()
-        count_by_category.columns = ['Valor Gasto por Viagem', 'Contagem de Viagens']
+    # Contando quantos valores estão em cada categoria
+    count_by_category = df['Fare Category'].value_counts().reset_index()
+    count_by_category.columns = ['Valor Gasto por Viagem', 'Contagem de Viagens']
 
-        # Ordenando as categorias do menor valor para o maior
-        count_by_category = count_by_category.sort_values(by='Valor Gasto por Viagem')
+    # Ordenando as categorias do menor valor para o maior
+    count_by_category = count_by_category.sort_values(by='Valor Gasto por Viagem')
 
-        # Criando um gráfico de barras interativo
-        fig = px.bar(count_by_category, x='Valor Gasto por Viagem', y='Contagem de Viagens',
-                    title='Contagem de Viagens por Valor Gasto',
-                    labels={'Valor Gasto por Viagem': 'Valor Gasto por Viagem', 'Contagem de Viagens': 'Contagem de Viagens'})
-        fig.update_xaxes(type='category')
-        st.plotly_chart(fig)
+    # Criando um gráfico de barras interativo
+    fig = px.bar(count_by_category, x='Valor Gasto por Viagem', y='Contagem de Viagens',
+                title='Contagem de Viagens por Valor Gasto',
+                labels={'Valor Gasto por Viagem': 'Valor Gasto por Viagem', 'Contagem de Viagens': 'Contagem de Viagens'})
+    fig.update_xaxes(type='category')
+    st.plotly_chart(fig)
 
-        # Contando quantas viagens estão em cada tipo de transporte
-        contagem_por_transporte = df['Product Type'].value_counts().reset_index()
-        contagem_por_transporte.columns = ['Tipo de transporte', 'Contagem']
+    # Contando quantas viagens estão em cada tipo de transporte
+    contagem_por_transporte = df['Product Type'].value_counts().reset_index()
+    contagem_por_transporte.columns = ['Tipo de transporte', 'Contagem']
 
-        # Criando um gráfico de barras horizontais com Plotly
-        fig = px.bar(contagem_por_transporte, x='Contagem', y='Tipo de transporte',
-            orientation='h', text='Contagem',
-            title='Distribuição de Tipos de Transporte')
-        fig.update_traces(textposition='outside')
-        fig.update_layout(xaxis_title='Contagem', yaxis_title='Tipo de transporte')
-        st.plotly_chart(fig)
+    # Criando um gráfico de barras horizontais com Plotly
+    fig = px.bar(contagem_por_transporte, x='Contagem', y='Tipo de transporte',
+        orientation='h', text='Contagem',
+        title='Distribuição de Tipos de Transporte')
+    fig.update_traces(textposition='outside')
+    fig.update_layout(xaxis_title='Contagem', yaxis_title='Tipo de transporte')
+    st.plotly_chart(fig)
 
-        # Definindo o formato da data e hora
-        date_format = "%Y-%m-%d %H:%M:%S +0000 UTC"
+    # Definindo o formato da data e hora
+    date_format = "%Y-%m-%d %H:%M:%S +0000 UTC"
 
-        # Convertendo colunas para o formato datetime especificado
-        df['Begin Trip Time'] = pd.to_datetime(df['Begin Trip Time'], format=date_format)
-        df['Dropoff Time'] = pd.to_datetime(df['Dropoff Time'], format=date_format)
-        df['Request Time'] = pd.to_datetime(df['Request Time'], format=date_format)
+    # Convertendo colunas para o formato datetime especificado
+    df['Begin Trip Time'] = pd.to_datetime(df['Begin Trip Time'], format=date_format)
+    df['Dropoff Time'] = pd.to_datetime(df['Dropoff Time'], format=date_format)
+    df['Request Time'] = pd.to_datetime(df['Request Time'], format=date_format)
 
-        # Criando colunas 'Duration' e 'Waiting Time'
-        df['Duration'] = df['Dropoff Time'] - df['Begin Trip Time']
+    # Criando colunas 'Duration' e 'Waiting Time'
+    df['Duration'] = df['Dropoff Time'] - df['Begin Trip Time']
 
-        # Convertendo a coluna 'Duration' para um tipo `str`
-        df['Duration (minutes)'] = df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60))
+    # Convertendo a coluna 'Duration' para um tipo `str`
+    df['Duration (minutes)'] = df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60))
 
-        # Convertendo a coluna 'Duration' para um tipo numérico
-        df['Duration (minutes)'] = pd.to_numeric(df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60)))
+    # Convertendo a coluna 'Duration' para um tipo numérico
+    df['Duration (minutes)'] = pd.to_numeric(df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60)))
 
-        # Função para criar as categorias de duração
-        def categorize_duration(duration_minutes):
-            if duration_minutes <= 5:
-                return '0-5 minutos'
-            elif duration_minutes <= 10:
-                return '6-10 minutos'
-            elif duration_minutes <= 20:
-                return '11-20 minutos'
-            elif duration_minutes <= 30:
-                return '21-30 minutos'
-            else:
-                return '31 minutos ou mais'
+    # Função para criar as categorias de duração
+    def categorize_duration(duration_minutes):
+        if duration_minutes <= 5:
+            return '0-5 minutos'
+        elif duration_minutes <= 10:
+            return '6-10 minutos'
+        elif duration_minutes <= 20:
+            return '11-20 minutos'
+        elif duration_minutes <= 30:
+            return '21-30 minutos'
+        else:
+            return '31 minutos ou mais'
 
-        # Adicionando uma nova coluna 'Categoria' ao DataFrame
-        df['Categoria'] = df['Duration (minutes)'].apply(categorize_duration)
+    # Adicionando uma nova coluna 'Categoria' ao DataFrame
+    df['Categoria'] = df['Duration (minutes)'].apply(categorize_duration)
 
-        # Contando quantas viagens estão em cada categoria
-        contagem_por_categoria = df['Categoria'].value_counts().reset_index()
-        contagem_por_categoria.columns = ['Categoria', 'Contagem']
+    # Contando quantas viagens estão em cada categoria
+    contagem_por_categoria = df['Categoria'].value_counts().reset_index()
+    contagem_por_categoria.columns = ['Categoria', 'Contagem']
 
-        # Criando um gráfico de pizza interativo com Plotly Express
-        fig = px.pie(contagem_por_categoria, values='Contagem', names='Categoria', title='Distribuição da Duração das Viagens')
-        fig.update_traces(textinfo='percent+label')
+    # Criando um gráfico de pizza interativo com Plotly Express
+    fig = px.pie(contagem_por_categoria, values='Contagem', names='Categoria', title='Distribuição da Duração das Viagens')
+    fig.update_traces(textinfo='percent+label')
 
-        # Exibindo o gráfico no Streamlit
-        st.plotly_chart(fig)
+    # Exibindo o gráfico no Streamlit
+    st.plotly_chart(fig)
 
 
 
