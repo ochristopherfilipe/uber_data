@@ -26,13 +26,7 @@ st.set_page_config(
 
 # Título e introdução
 st.title('Análise dos seus dados da Uber')
-st.write('1. Acesse o site da Uber e solicite seus dados. ou acesse [esse link](https://auth.uber.com/v2/?breeze_local_zone=phx7&next_url=https%3A%2F%2Fmyprivacy.uber.com%2Fprivacy%2Fexploreyourdata%2Fdownload&state=mBH_cSQedxK1Fzjp3Lqd6x6G7axt_m4--MebmYL_nx8%3D) para solicitar seus dados
-
-Obs:** *Pode levar 1 ou 2 dias para liberarem seus dados para o seu email.*
-
-2. Faça login na sua conta Uber.
-3. Siga as instruções para solicitar e baixar seus dados. Você receberá um arquivo CSV com as informações das suas viagens.
-4. Extraia o arquivo ZIP e encontre o arquivo "trips_data.csv". Esse é o arquivo que contém seus dados.')
+st.write('Acesse o site da Uber e solicite seus dados. Obs: Pode levar 1 ou 2 dias para liberarem seus dados para o seu email. Siga as instruções para solicitar e baixar seus dados. Você receberá um arquivo CSV com as informações das suas viagens. Extraia o arquivo ZIP e encontre o arquivo "trips_data.csv". Esse é o arquivo que contém seus dados.')
 
 # Configuração das abas
 tab1, tab2, tab3, tab4 = st.tabs(["Visualizando os dados", "Gráficos", "Despesas", "Locais"])
