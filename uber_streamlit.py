@@ -247,7 +247,7 @@ with tab4:
         df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
 
         # Criar um mapa com st.map usando as coordenadas
-        st.map(df_coordinates, use_container_width=True)
+        st.map(df_coordinates)
 
         st.markdown("---")
 
@@ -258,7 +258,7 @@ with tab4:
         df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
 
         # Criar um mapa com st.map usando as coordenadas
-        st.map(df_coordinates, use_container_width=True)
+        st.map(df_coordinates)
 
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
