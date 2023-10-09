@@ -152,7 +152,7 @@ with tab3:
     if df is not None and not df.empty:
         # Calculando o valor total gasto
         valor_gasto = df['Fare Amount'].sum()
-        st.subheader(f"Você já gastou R$ {valor_gasto:.2f} com Uber:")
+        st.subheader(f"Você já gastou R$ {valor_gasto:.2f} com Uber")
 
         st.markdown('---')
 
@@ -238,8 +238,6 @@ with tab4:
 
 
         st.markdown('---')
-
-        st.write('df')
         
         st.subheader("Todos os Pontos de Partida:")
 
