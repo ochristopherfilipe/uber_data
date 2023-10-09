@@ -242,13 +242,31 @@ with tab4:
 
         st.markdown('---')
 
-        st.subheader("Mapa Interativo:")  # Adicione um título para o mapa
+        st.subheader("Todos os Pontos de Saída:")  # Adicione um título para o mapa
         
         # Crie um mapa com Plotly Express
         fig = px.scatter_mapbox(df,
                                 lat="Begin Trip Lat",  # Substitua pelo nome correto da coluna de latitude
                                 lon="Begin Trip Lng",  # Substitua pelo nome correto da coluna de longitude
                                 hover_name="Begin Trip Address",  # Substitua pelo nome correto da coluna de rótulos
+                                zoom=10)
+        
+        # Defina o layout do mapa
+        fig.update_layout(mapbox_style="open-street-map")
+        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        
+        # Exiba o mapa no Streamlit
+        st.plotly_chart(fig)
+
+        st.markdown('---')
+
+        st.subheader("Todos os Pontos de Chegada:")  # Adicione um título para o mapa
+        
+        # Crie um mapa com Plotly Express
+        fig = px.scatter_mapbox(df,
+                                lat="Dropoff Lat",  # Substitua pelo nome correto da coluna de latitude
+                                lon="Dropoff Lng",  # Substitua pelo nome correto da coluna de longitude
+                                hover_name="Dropoff Address",  # Substitua pelo nome correto da coluna de rótulos
                                 zoom=10)
         
         # Defina o layout do mapa
