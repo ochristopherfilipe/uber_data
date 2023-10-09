@@ -244,7 +244,7 @@ with tab4:
         st.markdown('---')
 
         
-       st.subheader("Todos os Pontos de Partida:")
+        st.subheader("Todos os Pontos de Partida:")
 
         if file_data is not None:
             df_tab4 = load_data(file_data)
