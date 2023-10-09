@@ -5,11 +5,13 @@ import streamlit as st
 from geopy.distance import great_circle
 
 # Função para carregar os dados
+df = None
+
 def load_data(file_data):
-    if df is not None and not df.empty:
+    global df  # Defina df como global
+    if file_data is not None:
         df = pd.read_csv(file_data)
-        return df
-    return None
+    return df
 
 # Configuração da página
 st.set_page_config(
