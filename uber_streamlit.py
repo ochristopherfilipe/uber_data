@@ -59,26 +59,17 @@ with tab1:
 with tab2:
     st.title('Gráficos')
 
-    # Função para carregar os dados definida na tab1
-    def load_data_tab2(file_data):
-        if file_data is not None:
-            df_tab2 = pd.read_csv(file_data)
-            return df_tab2
-
-    # Carregar dados da tab2
-    df_tab2 = load_data_tab2(file_data)
-
-    # Continuar com a criação de gráficos usando df_tab2
-    if df_tab2 is not None:
+    # Continuar com a criação de gráficos usando df
+    if df is not None:
         # Criando categorias de gastos
         categories = [0, 5, 10, 15, 20, 30, float('inf')]
         labels = ['R$0 - R$5', 'R$6 - R$10', 'R$11-R$15', 'R$16-R$20', 'R$21-R$30', 'R$31-R$100']
 
         # Adicionando uma nova coluna ao DataFrame com as categorias
-        df_tab2['Fare Category'] = pd.cut(df_tab2['Fare Amount'], bins=categories, labels=labels)
+        df['Fare Category'] = pd.cut(df['Fare Amount'], bins=categories, labels=labels)
 
         # Contando quantos valores estão em cada categoria
-        count_by_category = df_tab2['Fare Category'].value_counts().reset_index()
+        count_by_category = df['Fare Category'].value_counts().reset_index()
         count_by_category.columns = ['Valor Gasto por Viagem', 'Contagem de Viagens']
 
         # Ordenando as categorias do menor valor para o maior
@@ -92,7 +83,7 @@ with tab2:
         st.plotly_chart(fig)
 
         # Contando quantas viagens estão em cada tipo de transporte
-        contagem_por_transporte = df_tab2['Product Type'].value_counts().reset_index()
+        contagem_por_transporte = df['Product Type'].value_counts().reset_index()
         contagem_por_transporte.columns = ['Tipo de transporte', 'Contagem']
 
         # Criando um gráfico de barras horizontais com Plotly
@@ -107,18 +98,18 @@ with tab2:
         date_format = "%Y-%m-%d %H:%M:%S +0000 UTC"
 
         # Convertendo colunas para o formato datetime especificado
-        df_tab2['Begin Trip Time'] = pd.to_datetime(df_tab2['Begin Trip Time'], format=date_format)
-        df_tab2['Dropoff Time'] = pd.to_datetime(df_tab2['Dropoff Time'], format=date_format)
-        df_tab2['Request Time'] = pd.to_datetime(df_tab2['Request Time'], format=date_format)
+        df['Begin Trip Time'] = pd.to_datetime(df['Begin Trip Time'], format=date_format)
+        df['Dropoff Time'] = pd.to_datetime(df['Dropoff Time'], format=date_format)
+        df['Request Time'] = pd.to_datetime(df['Request Time'], format=date_format)
 
         # Criando colunas 'Duration' e 'Waiting Time'
-        df_tab2['Duration'] = df_tab2['Dropoff Time'] - df_tab2['Begin Trip Time']
+        df['Duration'] = df['Dropoff Time'] - df['Begin Trip Time']
 
         # Convertendo a coluna 'Duration' para um tipo `str`
-        df_tab2['Duration (minutes)'] = df_tab2['Duration'].apply(lambda duration: str(duration.total_seconds() // 60))
+        df['Duration (minutes)'] = df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60))
 
         # Convertendo a coluna 'Duration' para um tipo numérico
-        df_tab2['Duration (minutes)'] = pd.to_numeric(df_tab2['Duration'].apply(lambda duration: str(duration.total_seconds() // 60)))
+        df['Duration (minutes)'] = pd.to_numeric(df['Duration'].apply(lambda duration: str(duration.total_seconds() // 60)))
 
         # Função para criar as categorias de duração
         def categorize_duration(duration_minutes):
@@ -134,10 +125,10 @@ with tab2:
                 return '31 minutos ou mais'
 
         # Adicionando uma nova coluna 'Categoria' ao DataFrame
-        df_tab2['Categoria'] = df_tab2['Duration (minutes)'].apply(categorize_duration)
+        df['Categoria'] = df['Duration (minutes)'].apply(categorize_duration)
 
         # Contando quantas viagens estão em cada categoria
-        contagem_por_categoria = df_tab2['Categoria'].value_counts().reset_index()
+        contagem_por_categoria = df['Categoria'].value_counts().reset_index()
         contagem_por_categoria.columns = ['Categoria', 'Contagem']
 
         # Criando um gráfico de pizza interativo com Plotly Express
