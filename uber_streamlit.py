@@ -241,10 +241,10 @@ with tab4:
 
         st.markdown('---')
 
+        st.write('df')
+        
         st.subheader("Todos os Pontos de Partida:")
 
-
-        df = df.dropna()
 
         # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
         df_coordinates = df[["Begin Trip Lat", "Begin Trip Lng"]]
@@ -256,8 +256,6 @@ with tab4:
         st.markdown("---")
 
         st.subheader('Todos os Pontos de Chegada:')
-
-        df = df.dropna()
 
         # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
         df_coordinates = df[["Dropoff Lat", "Dropoff Lng"]]
