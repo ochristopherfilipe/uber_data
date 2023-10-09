@@ -191,6 +191,8 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
+    df = load_data(file_data)
+    
     if df is not None and not df.empty:        
         df = df.dropna()
 
@@ -198,7 +200,7 @@ with tab4:
         endereco_mais_frequente = df['Begin Trip Address'].value_counts().idxmax()
         st.write(endereco_mais_frequente)
         
-        st.subheader('Local onde você mais foi')
+        st.subheader('Local onde você mais foi:')
         local_mais_frequente = df['Dropoff Address'].value_counts().idxmax()
         st.write(local_mais_frequente)
 
