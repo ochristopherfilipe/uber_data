@@ -242,28 +242,26 @@ with tab4:
 
 
         st.markdown('---')
+
+    else:
+        # Se df não estiver definido, exiba uma mensagem para o usuário
+        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
         
-        st.subheader("Todos os Pontos de Partida:")
-
-
-        # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
-        df_coordinates = df[["Begin Trip Lat", "Begin Trip Lng"]]
-        df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
-
-        # Criar um mapa com st.map usando as coordenadas
-        st.map(df_coordinates)
-
-        st.markdown("---")
-
-        st.subheader('Todos os Pontos de Chegada:')
-
-        # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
-        df_coordinates = df[["Dropoff Lat", "Dropoff Lng"]]
-        df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
-
-        # Criar um mapa com st.map usando as coordenadas
-        st.map(df_coordinates)
-
+    if df is not None and not df.empty:
+        if "Begin Trip Lat" in df.columns and "Begin Trip Lng" in df.columns:
+            st.subheader("Todos os Pontos de Partida:")
+            df_coordinates_start = df[["Begin Trip Lat", "Begin Trip Lng"]]
+            df_coordinates_start = df_coordinates_start.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
+            st.map(df_coordinates_start)
+            st.markdown("---")
+    
+        if "Dropoff Lat" in df.columns and "Dropoff Lng" in df.columns:
+            st.subheader('Todos os Pontos de Chegada:')
+            df_coordinates_dropoff = df[["Dropoff Lat", "Dropoff Lng"]]
+            df_coordinates_dropoff = df_coordinates_dropoff.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
+            st.map(df_coordinates_dropoff)
+    
+    
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
         st.write("Carregue um arquivo CSV na aba 1 para continuar.")
