@@ -7,11 +7,13 @@ from geopy.distance import great_circle
 # Função para carregar os dados
 df = None
 
+# Função para carregar os dados
 def load_data(file_data):
-    global df  # Defina df como global
-    if file_data is not None:
+    if file_data is not None and file_data.read() != b'':
         df = pd.read_csv(file_data)
-    return df
+        return df
+    else:
+        return None
 
 # Configuração da página
 st.set_page_config(
