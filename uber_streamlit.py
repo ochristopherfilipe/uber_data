@@ -260,7 +260,7 @@ with tab4:
 
         st.markdown('---')
 
-        st.subheader("Todos os Pontos de Chegada:")  # Adicione um título para o mapa
+        st.subheader("Todos os Lugares aonde você foi:")  # Adicione um título para o mapa
         
         # Crie um mapa com Plotly Express
         fig = px.scatter_mapbox(df,
