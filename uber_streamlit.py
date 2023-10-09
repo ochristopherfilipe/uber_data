@@ -32,7 +32,7 @@ with tab1:
     # Upload do arquivo CSV na primeira aba
     file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
 
-    if not df.empty:
+    if df is not None:
         df = load_data(file_data)
 
         # Checkbox para mostrar detalhes do dataset
