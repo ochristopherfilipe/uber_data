@@ -248,8 +248,9 @@ with tab4:
 
         st.subheader("Todos os Pontos de Partida:")
 
-        if file_data is not None:
-            df = load_data(file_data)
+        if file_data is not None:        
+            # Carregar o arquivo para a variável df
+            df = pd.read_csv(file_data)
         
             df = df.dropna()
         
@@ -264,8 +265,9 @@ with tab4:
         
         st.subheader('Todos os Pontos de Chegada:')
         
-        if file_data is not None:
-            df = load_data_tab1(file_data)
+        if file_data is not None:        
+            # Carregar o arquivo para a variável df
+            df = pd.read_csv(file_data)
         
             df = df.dropna()
         
