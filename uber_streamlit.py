@@ -244,35 +244,7 @@ with tab4:
         st.markdown('---')
 
         
-        st.subheader("Todos os Pontos de Partida:")
 
-        if file_data is not None:
-            df_tab4 = load_data(file_data)
-
-            df_tab4 = df_tab4.dropna()
-
-            # Selecionar apenas as colunas "Begin Trip Lat" e "Begin Trip Lng" e renomeá-las
-            df_coordinates = df_tab4[["Begin Trip Lat", "Begin Trip Lng"]]
-            df_coordinates = df_coordinates.rename(columns={"Begin Trip Lat": "LATITUDE", "Begin Trip Lng": "LONGITUDE"})
-
-            # Criar um mapa com st.map usando as coordenadas
-            st.map(df_coordinates, use_container_width=True)
-
-            st.markdown("---")
-    
-            st.subheader('Todos os Pontos de Chegada:')
-    
-            if file_data is not None:
-                df_tab4 = load_data_tab1(file_data)
-    
-                df_tab4 = df_tab4.dropna()
-    
-                # Selecionar apenas as colunas "Dropoff Lat" e "Dropoff Lng" e renomeá-las
-                df_coordinates = df_tab4[["Dropoff Lat", "Dropoff Lng"]]
-                df_coordinates = df_coordinates.rename(columns={"Dropoff Lat": "LATITUDE", "Dropoff Lng": "LONGITUDE"})
-    
-                # Criar um mapa com st.map usando as coordenadas
-                st.map(df_coordinates, use_container_width=True)
     
     
     else:
