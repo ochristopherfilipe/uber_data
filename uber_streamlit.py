@@ -6,7 +6,7 @@ from geopy.distance import great_circle
 
 # Função para carregar os dados
 def load_data(file_data):
-    if file_data is not None:
+    if df is not None and not df.empty:
         df = pd.read_csv(file_data)
         return df
     return None
@@ -31,7 +31,7 @@ with tab1:
 
     df = load_data(file_data)
 
-    if df is not None:
+    if df is not None and not df.empty:
         # Checkbox para mostrar detalhes do dataset
         if st.checkbox('Mostrar detalhes do dataset'):
             st.subheader('Preview dos Dados')
@@ -58,7 +58,7 @@ with tab1:
 with tab2:
     st.title('Gráficos')
 
-    if not df.empty:
+    if df is not None and not df.empty:
 
         # Criando categorias de gastos
         categories = [0, 5, 10, 15, 20, 30, float('inf')]
@@ -147,7 +147,7 @@ with tab3:
     st.title('Dados de Despesas:')
 
 
-    if not df.empty:
+    if df is not None and not df.empty:
         # Calculando o valor total gasto
         valor_gasto = df['Fare Amount'].sum()
         st.subheader(f"Você já gastou R$ {valor_gasto:.2f} com Uber:")
@@ -189,7 +189,7 @@ with tab3:
 with tab4:
     st.title('Locais:')
 
-    if df is not None:        
+    if df is not None and not df.empty:        
         df = df.dropna()
 
         st.subheader('Local de onde você mais saiu:')
