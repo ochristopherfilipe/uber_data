@@ -26,16 +26,93 @@ st.set_page_config(
 
 # Título e introdução
 st.title('Análise dos seus dados da Uber')
-st.write('Acesse o site da Uber e solicite seus dados. Obs: Pode levar 1 ou 2 dias para liberarem seus dados para o seu email. Siga as instruções para solicitar e baixar seus dados. Você receberá um arquivo CSV com as informações das suas viagens. Extraia o arquivo ZIP e encontre o arquivo "trips_data.csv". Esse é o arquivo que contém seus dados.')
-
+st.write('')
 # Configuração das abas
-tab1, tab2, tab3, tab4 = st.tabs(["Visualizando os dados", "Gráficos", "Despesas", "Locais"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Por que Usar?", "Como Usar", "Visualizando os Dados", "Gráficos", "Despesas", "Locais"])
 
 with tab1:
+    st.title('Por que usar?')
+    st.markdown('''
+    ## Descubra Mais Sobre Suas Viagens com a Uber!
+
+    Você já se perguntou como seria interessante explorar suas próprias jornadas com a Uber? Bem, agora você pode! Este aplicativo foi criado com o objetivo de desvendar os mistérios por trás de suas viagens e despesas, oferecendo a você uma visão detalhada de suas aventuras nas estradas.
+
+    ### A Origem da Ideia
+
+    A ideia para este aplicativo surgiu da curiosidade e da necessidade de compreender melhor o impacto das viagens com a Uber em nossas vidas. Afinal, o serviço revolucionou a forma como nos movemos nas cidades, tornando o transporte mais conveniente do que nunca. Mas o que essas viagens realmente representam para nós? Quanto gastamos? Quais são nossos destinos mais frequentes?
+
+    ### A Intenção por Trás do Aplicativo
+
+    A intenção é simples: capacitar você com informações detalhadas sobre suas viagens. Ao entender suas despesas, padrões de viagem e destinos favoritos, você pode tomar decisões mais informadas e, quem sabe, até economizar algum dinheiro. Este aplicativo visa trazer clareza para o universo de viagens com a Uber, transformando dados em conhecimento.
+
+    ### Por Que Você Deve Explorar Seus Dados da Uber?
+
+    **Consciência Financeira:** Conhecer o quanto você gasta com a Uber pode ajudar na gestão de suas finanças pessoais. Saiba quanto você investe em mobilidade e ajuste seu orçamento de acordo.
+
+    **Identificação de Padrões:** Descubra quando e para onde você viaja com mais frequência. Isso pode revelar informações valiosas sobre seus hábitos e preferências de deslocamento.
+
+    **Melhoria na Tomada de Decisões:** Com dados em mãos, você pode tomar decisões mais informadas sobre suas viagens futuras. Optar por alternativas mais econômicas ou sustentáveis é mais fácil quando você conhece suas opções.
+
+    **Aventura e Exploração:** Além de fins práticos, explorar seus dados pode ser uma jornada fascinante por si só. Descubra curiosidades sobre suas viagens que você nunca imaginou!
+
+    Pronto para embarcar nessa jornada de descobertas? Carregue seu arquivo CSV da Uber na aba "Visualizando os Dados" e comece a explorar suas viagens. Este aplicativo está aqui para transformar dados em insights, e nós estamos empolgados para ajudar você a aproveitar ao máximo suas experiências com a Uber!
+
+    Não espere mais. Descubra o poder dos seus próprios dados de viagem agora!
+                
+    ### Veja mais dos meus projetos:
+                
+    Clique aqui: [**Meu Portifólio**](https://ochristopherfilipe.github.io/portifolio/index.html) e saiba mais sobre projetos e **análises descritivas e preditivas superinteressantes**!
+
+    ''')
+
+with tab2:
+    st.title('Como Usar')
+    st.markdown(r''' 
+
+Você pode solicitar seus dados pessoais. A LGPD garante o direito de acesso aos dados pessoais tratados pela Uber.
+                
+### Como solicitar:
+##### 1. Acessando [Esse Link](https://help.uber.com/pt-BR/lite/riders/article/solicita%C3%A7%C3%A3o-de-dados-da-uber?nodeId=f1ba2cfb-2bd0-4d49-9e68-f980cdbc8829) e seguindo os passos nas imagens abaixo:
+
+''')
+    st.image('img/solicitacao_1.png', caption='Passo 1')
+    st.markdown(r''' 
+
+#### 2. Após clicar em solicitação de dados pessoais, clique em 'solicitar' na aba de *Baixe suas informações*
+''')
+    
+    st.image('img/solicitacao_2.png', caption='Passo 2')
+    st.markdown(r''' 
+
+#### 3. Acesse usando sua conta (a mesma que você usa pra pedir Uber)
+''')
+    st.image('img/solicitacao_3.png', caption='Passo 3')
+    st.markdown(r''' 
+
+#### 4. Após realizar esses passos você será informado que pode levar de 1 a 2 dias para seus dados serem enviados ao seu email.
+##### * Alguns momentos depois o seguinte email chega na sua caixa de entrada:
+''')
+    st.image('img/solicitacao_4.png', caption='Passo 4')
+    st.markdown(r''' 
+##### * Clique em 'Go To Download Page' e faça o download do seu arquivo ZIP
+
+#### 5. Extraia o arquivo ZIP e ache o arquivo 'trips_data.csv'
+''')
+    st.image('img/solicitacao_5.png', caption='Passo 5')
+
+    st.markdown(''' 
+                #### Após baixar o arquivo ZIP, provavelmente esse será o caminho para seu arquivo:
+                ''')
+    st.markdown(r''' 
+                #### c:\Users\[SEU USUÁRIO]\Downloads\Uber Data B1525343.zip\Uber Data\Rider\trips_data.csv
+                ''')
+
+with tab3:
     # Upload do arquivo CSV na primeira aba
     file_data = st.file_uploader("Carregue o arquivo 'trips_data.csv'", type=["csv"])
 
     df = load_data(file_data)
+    
 
     if df is not None and not df.empty:
         # Checkbox para mostrar detalhes do dataset
@@ -61,7 +138,7 @@ with tab1:
         st.write("Número de viagens por cidade:")
         st.write(df['City'].value_counts())
 
-with tab2:
+with tab4:
     st.title('Gráficos')
 
     if df is not None and not df.empty:
@@ -145,11 +222,11 @@ with tab2:
 
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
-        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
+        st.write("Carregue um arquivo CSV na aba 'Visualizando os Dados.'")
 
 
 
-with tab3:
+with tab5:
     st.title('Dados de Despesas:')
 
 
@@ -188,11 +265,11 @@ with tab3:
 
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
-        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
+        st.write("Carregue um arquivo CSV na aba 'Visualizando os Dados.'")
 
 
 
-with tab4:
+with tab6:
     st.title('Locais:')
     
     if df is not None and not df.empty:        
@@ -278,5 +355,4 @@ with tab4:
         
     else:
         # Se df não estiver definido, exiba uma mensagem para o usuário
-        st.write("Carregue um arquivo CSV na aba 1 para continuar.")
-
+        st.write("Carregue um arquivo CSV na aba 'Visualizando os Dados.'")
