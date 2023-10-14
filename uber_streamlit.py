@@ -30,8 +30,6 @@ st.write('')
 # Configuração das abas
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Por que Usar?", "Como Usar", "Visualizando os Dados", "Gráficos", "Despesas", "Locais"])
 
-app.run_server(mode="live")
-
 with tab1:
     st.title('Por que usar?')
     st.markdown('''
